@@ -1,238 +1,154 @@
-# Secure Password Storage System using Hashing and Salting
+🔐 Secure Password Storage System using Advanced Hashing & Salting
+With Audit Logging and Compliance-Oriented Design
+📌 Project Abstract
 
-## 📋 Project Overview
+In today’s digital era, improper password storage is one of the major causes of data breaches.
+This project, Secure Password Storage System using Hashing and Salting, is designed to demonstrate industry-standard password security practices using bcrypt, along with security audit logging to meet compliance and audit requirements.
 
-This is a complete mini project demonstrating secure password storage using **bcrypt hashing and salting** with security audit logging for compliance purposes. The project is designed for undergraduate students studying **Security Audit and Compliance**.
+The system ensures that user passwords are never stored in plain text, protects against brute-force and rainbow table attacks, and maintains a complete audit trail of authentication activities.
+This project is especially suitable for students studying Security Audit, Information Security, and Compliance Frameworks.
 
-## 🎯 Learning Objectives
+🎯 Project Objectives
 
-- Understand password hashing and salting concepts
-- Implement secure password storage practices
-- Learn about security audit logging
-- Understand compliance requirements for password protection
+To implement secure password storage using strong cryptographic hashing
 
-## 🔧 Technology Stack
+To demonstrate automatic salting for enhanced security
 
-- **Python 3.x** - Programming language
-- **Flask** - Web framework
-- **SQLite** - Database
-- **bcrypt** - Password hashing library
-- **HTML/CSS** - Frontend
+To record and maintain audit logs for authentication events
 
-## 📁 Project Structure
+To understand security compliance requirements in authentication systems
 
-```
+To build a real-world applicable security model for web applications
+
+🛠️ Technology Stack
+Component	Technology
+Programming Language	Python 3.x
+Backend Framework	Flask
+Database	SQLite
+Password Security	bcrypt
+Frontend	HTML, CSS
+Security Concept	Hashing, Salting, Audit Logging
+📁 Project Architecture & Structure
 secure-password-storage/
 │
-├── app.py                 # Main Flask application
-├── requirements.txt       # Python dependencies
-├── database.db           # SQLite database (created automatically)
-├── README.md             # This file
+├── app.py                 # Core Flask application & security logic
+├── requirements.txt       # Required Python libraries
+├── database.db            # SQLite database (auto-generated)
+├── README.md              # Project documentation
 │
-├── templates/            # HTML templates
-│   ├── register.html     # User registration page
-│   ├── login.html        # User login page
-│   └── dashboard.html    # User dashboard
+├── templates/
+│   ├── register.html      # Secure user registration interface
+│   ├── login.html         # Authentication page
+│   └── dashboard.html     # Dashboard with audit trail
 │
-└── static/              # Static files
-    └── style.css        # CSS stylesheet
-```
+└── static/
+    └── style.css          # UI styling
 
-## 🚀 Installation & Setup
+🚀 Installation & Execution Steps
+Step 1: Prerequisites
 
-### Step 1: Install Python
-Make sure you have Python 3.7 or higher installed on your system.
+Python 3.7 or above
 
-### Step 2: Install Dependencies
-Open terminal/command prompt in the project directory and run:
+Basic knowledge of Flask
 
-```bash
+Step 2: Install Dependencies
 pip install -r requirements.txt
-```
 
-This will install:
-- Flask (web framework)
-- bcrypt (password hashing library)
-
-### Step 3: Run the Application
-```bash
+Step 3: Run the Application
 python app.py
-```
 
-### Step 4: Access the Application
-Open your web browser and go to:
-```
+Step 4: Access via Browser
 http://127.0.0.1:5000
-```
 
-## 📖 How to Use
+🔐 Core Security Concepts Implemented
+1️⃣ Password Hashing
 
-1. **Register a New User**
-   - Click on "Register here" or go to `/register`
-   - Enter a username and password (minimum 8 characters)
-   - Click "Register"
-   - Your password will be hashed and stored securely
+Passwords are converted into irreversible cryptographic hashes
 
-2. **Login**
-   - Go to `/login`
-   - Enter your username and password
-   - Click "Login"
-   - Your login attempt will be logged in the audit trail
+bcrypt uses adaptive hashing, making brute-force attacks computationally expensive
 
-3. **View Dashboard**
-   - After successful login, you'll see the dashboard
-   - View recent audit logs
-   - Learn about security features
+Even database administrators cannot view actual passwords
 
-## 🔐 Security Features Explained
+2️⃣ Automatic Salting
 
-### 1. Password Hashing
-- **What it is**: Converting a password into a fixed-length string using a mathematical function
-- **Why it's important**: Even if someone accesses the database, they cannot see your actual password
-- **How it works**: bcrypt uses a one-way hash function that cannot be reversed
+A unique random salt is generated for every password
 
-### 2. Salting
-- **What it is**: Adding random data to a password before hashing
-- **Why it's important**: Prevents rainbow table attacks and ensures unique hashes even for identical passwords
-- **How it works**: bcrypt automatically generates a unique salt for each password
+Prevents:
 
-### 3. Password Verification
-- **What it is**: Checking if an entered password matches the stored hash
-- **How it works**: bcrypt extracts the salt from the stored hash, applies it to the entered password, and compares the results
+Rainbow table attacks
 
-### 4. Audit Logging
-- **What it is**: Recording all security events (login attempts)
-- **Why it's important**: Required for security compliance and helps detect unauthorized access
-- **What's logged**: Username, status (success/failure), and timestamp
+Hash collision attacks
 
-## 🗄️ Database Schema
+bcrypt internally manages salt storage securely
 
-### Users Table
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INTEGER | Primary key (auto-increment) |
-| username | TEXT | Unique username |
-| password_hash | TEXT | Hashed password (NOT plain text) |
-| created_at | TIMESTAMP | Account creation time |
+3️⃣ Secure Password Verification
 
-### Audit_logs Table
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INTEGER | Primary key (auto-increment) |
-| username | TEXT | Username that attempted login |
-| status | TEXT | 'success' or 'failure' |
-| timestamp | TIMESTAMP | Time of login attempt |
+User-entered password is hashed using the same salt
 
-## 📝 Code Explanation
+Hashes are compared without exposing original passwords
 
-### Key Functions
+Ensures secure authentication flow
 
-1. **`hash_password(password)`**
-   - Generates a salt and hashes the password
-   - Returns the hashed password as a string
+4️⃣ Audit Logging (Compliance Feature)
 
-2. **`verify_password(password, password_hash)`**
-   - Verifies if the entered password matches the stored hash
-   - Returns True if match, False otherwise
+Every login attempt is logged with:
 
-3. **`log_audit_event(username, status)`**
-   - Records login attempts in the audit_logs table
-   - Essential for security compliance
+Username
 
-4. **`validate_password(password)`**
-   - Checks if password meets minimum requirements (8 characters)
-   - Returns validation result and error message
+Login status (Success / Failure)
 
-## 🎓 Viva Questions & Answers
+Timestamp
 
-### Q1: What is password hashing?
-**Answer**: Password hashing is the process of converting a password into a fixed-length string using a mathematical function. It's a one-way process, meaning you cannot reverse the hash to get the original password. This ensures that even if someone accesses the database, they cannot see actual passwords.
+Essential for:
 
-### Q2: What is salting and why is it important?
-**Answer**: Salting is adding random data to a password before hashing. Each password gets a unique salt, so even if two users have the same password, their hashes will be different. This prevents rainbow table attacks where attackers use pre-computed hash tables to crack passwords.
+Security audits
 
-### Q3: How does bcrypt work?
-**Answer**: bcrypt automatically generates a unique salt for each password and combines it with the password before hashing. The salt is included in the final hash, so we don't need to store it separately. During verification, bcrypt extracts the salt from the stored hash and uses it to verify the entered password.
+Intrusion detection
 
-### Q4: Why do we need audit logging?
-**Answer**: Audit logging is required for security compliance. It helps:
-- Track all login attempts (successful and failed)
-- Detect unauthorized access attempts
-- Maintain a security audit trail
-- Meet compliance requirements for security audits
+Compliance verification
 
-### Q5: What security best practices are implemented?
-**Answer**:
-1. **Never store plain text passwords** - Only hashed passwords are stored
-2. **Use strong hashing algorithm** - bcrypt is industry-standard
-3. **Automatic salting** - Each password gets unique salt
-4. **Password strength validation** - Minimum 8 characters required
-5. **Audit trail** - All login attempts are logged
-6. **Session management** - Secure session handling
+🗄️ Database Design (Normalized & Secure)
+🔹 Users Table
+Field	Description
+id	Unique user identifier
+username	Unique login name
+password_hash	bcrypt hashed password
+created_at	Account creation timestamp
+🔹 Audit Logs Table
+Field	Description
+id	Unique log identifier
+username	Login attempt user
+status	success / failure
+timestamp	Login attempt time
+🧠 Key Functional Modules
+🔹 hash_password(password)
 
-### Q6: What happens if someone accesses the database?
-**Answer**: Even if someone accesses the database, they cannot get actual passwords because:
-- Only hashed passwords are stored (not plain text)
-- Hashing is a one-way function (cannot be reversed)
-- Each password has a unique salt, making it extremely difficult to crack
-- bcrypt is computationally expensive, making brute-force attacks impractical
+Generates salt + hash using bcrypt
 
-## 🔍 Testing the System
+Returns secure hash
 
-1. **Test Registration**
-   - Try registering with a password less than 8 characters (should fail)
-   - Register with a valid password (should succeed)
-   - Try registering the same username twice (should fail)
+🔹 verify_password(password, stored_hash)
 
-2. **Test Login**
-   - Try logging in with wrong password (should fail and be logged)
-   - Login with correct password (should succeed and be logged)
-   - Check dashboard to see audit logs
+Verifies password without revealing hash
 
-3. **Test Audit Logging**
-   - Make multiple login attempts (both success and failure)
-   - Check the dashboard to see all attempts logged with timestamps
+Returns authentication result
 
-## ⚠️ Important Notes
+🔹 log_audit_event(username, status)
 
-- This is a **prototype/educational project** for learning purposes
-- For production use, additional security measures are needed:
-  - HTTPS encryption
-  - Rate limiting for login attempts
-  - Password complexity requirements
-  - Account lockout after failed attempts
-  - Secure session management
-  - Environment variables for secrets
+Records authentication activity
 
-## 📚 References
+Supports security compliance
 
-- Flask Documentation: https://flask.palletsprojects.com/
-- bcrypt Documentation: https://github.com/pyca/bcrypt/
-- OWASP Password Storage Cheat Sheet: https://cheatsheetseries.owasp.org/
+🔹 validate_password(password)
 
-## 👨‍💻 Project Features Summary
+Enforces password policy (minimum length)
 
-✅ User registration with password validation  
-✅ Secure password hashing using bcrypt  
-✅ Automatic password salting  
-✅ User login with password verification  
-✅ Security audit logging  
-✅ Dashboard with audit trail display  
-✅ Clean and simple user interface  
-✅ Well-commented code for learning  
-✅ Viva-ready explanations  
+Prevents weak credentials
 
-## 🎯 Conclusion
+🧪 Testing & Validation
 
-This project demonstrates fundamental security concepts:
-- **Hashing**: One-way password encryption
-- **Salting**: Random data addition for uniqueness
-- **Audit Logging**: Security event tracking
-- **Compliance**: Meeting security audit requirements
-
----
-
-**Project Created For**: Security Audit and Compliance Course  
-**Academic Purpose**: Educational demonstration of secure password storage
-#   S e c u r e - P a s s w o r d - S t o r a g e - S y s t e m - u s i n g - H a s h i n g - a n d - S a l t i n g -  
- 
+✔ Weak password rejection
+✔ Duplicate username prevention
+✔ Successful & failed login detection
+✔ Audit trail verification
+✔ Secure password comparison
