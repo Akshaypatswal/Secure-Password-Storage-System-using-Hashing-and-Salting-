@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Secure Password System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-box">
+            <div class="dashboard-header">
+                <h1>👋 Welcome, {{ username }}!</h1>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+            </div>
+            
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="dashboard-content">
+                <div class="info-section">
+                    <h2>🔒 Security Information</h2>
+                    <div class="info-card">
+                        <h3>Password Storage</h3>
+                        <p>Your password is securely stored using:</p>
+                        <ul>
+                            <li><strong>bcrypt</strong> hashing algorithm</li>
+                            <li><strong>Automatic salting</strong> - Each password gets a unique salt</li>
+                            <li><strong>No plain text</strong> - Only hashed passwords are stored</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Security Audit & Compliance</h3>
+                        <p>This system maintains audit logs for:</p>
+                        <ul>
+                            <li>All login attempts (success and failure)</li>
+                            <li>Timestamp of each attempt</li>
+                            <li>Username tracking for security monitoring</li>
+                            <li>Compliance with security audit requirements</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="audit-section">
+                    <h2>📋 Recent Audit Logs</h2>
+                    <p class="section-description">Security audit trail showing recent login attempts</p>
+                    
+                    {% if audit_logs %}
+                        <table class="audit-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for log in audit_logs %}
+                                <tr>
+                                    <td>{{ log.id }}</td>
+                                    <td>{{ log.username }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ log.status }}">
+                                            {{ log.status.upper() }}
+                                        </span>
+                                    </td>
+                                    <td>{{ log.timestamp }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="no-data">No audit logs available yet.</p>
+                    {% endif %}
+                </div>
+                
+                <div class="explanation-section">
+                    <h2>📚 How It Works</h2>
+                    <div class="explanation-card">
+                        <h3>1. Password Hashing</h3>
+                        <p>When you register, your password is hashed using bcrypt. Hashing is a one-way function that converts your password into a fixed-length string. Even if someone accesses the database, they cannot reverse the hash to get your original password.</p>
+                    </div>
+                    
+                    <div class="explanation-card">
+                        <h3>2. Salting</h3>
+                        <p>Salting adds random data to your password before hashing. Each password gets a unique salt, so even if two users have the same password, their hashes will be different. This prevents rainbow table attacks.</p>
+                    </div>
+                    
+                    <div class="explanation-card">
+                        <h3>3. Password Verification</h3>
+                        <p>During login, bcrypt extracts the salt from the stored hash, applies it to your entered password, and compares the result. If they match, login is successful.</p>
+                    </div>
+                    
+                    <div class="explanation-card">
+                        <h3>4. Audit Logging</h3>
+                        <p>Every login attempt (success or failure) is logged with username, status, and timestamp. This creates an audit trail for security compliance and helps detect unauthorized access attempts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
