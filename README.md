@@ -1,154 +1,161 @@
-🔐 Secure Password Storage System using Advanced Hashing & Salting
-With Audit Logging and Compliance-Oriented Design
-📌 Project Abstract
+🔐 Secure Password Storage System using Hashing and Salting
 
-In today’s digital era, improper password storage is one of the major causes of data breaches.
-This project, Secure Password Storage System using Hashing and Salting, is designed to demonstrate industry-standard password security practices using bcrypt, along with security audit logging to meet compliance and audit requirements.
+A secure and compliance-oriented mini project that demonstrates industry-standard password storage techniques using bcrypt hashing and automatic salting, along with security audit logging.
+This project is developed for academic purposes under the Security Audit and Compliance domain.
 
-The system ensures that user passwords are never stored in plain text, protects against brute-force and rainbow table attacks, and maintains a complete audit trail of authentication activities.
-This project is especially suitable for students studying Security Audit, Information Security, and Compliance Frameworks.
+📌 Project Description
 
-🎯 Project Objectives
+Insecure password storage is one of the leading causes of data breaches.
+This project focuses on implementing a secure authentication system where passwords are never stored in plain text. Instead, strong cryptographic hashing and salting techniques are used to ensure confidentiality and integrity.
 
-To implement secure password storage using strong cryptographic hashing
+Additionally, the system maintains audit logs for all authentication attempts, fulfilling basic security audit and compliance requirements.
 
-To demonstrate automatic salting for enhanced security
+🎯 Objectives
 
-To record and maintain audit logs for authentication events
+Implement secure password storage using bcrypt
 
-To understand security compliance requirements in authentication systems
+Understand hashing and salting mechanisms
 
-To build a real-world applicable security model for web applications
+Prevent rainbow table and brute-force attacks
+
+Maintain audit logs for login attempts
+
+Demonstrate security compliance concepts in practice
 
 🛠️ Technology Stack
-Component	Technology
-Programming Language	Python 3.x
-Backend Framework	Flask
-Database	SQLite
-Password Security	bcrypt
-Frontend	HTML, CSS
-Security Concept	Hashing, Salting, Audit Logging
-📁 Project Architecture & Structure
+
+Python 3.x
+
+Flask
+
+SQLite
+
+bcrypt
+
+HTML & CSS
+
+📁 Project Structure
 secure-password-storage/
 │
-├── app.py                 # Core Flask application & security logic
-├── requirements.txt       # Required Python libraries
-├── database.db            # SQLite database (auto-generated)
-├── README.md              # Project documentation
+├── app.py
+├── requirements.txt
+├── database.db
+├── README.md
 │
 ├── templates/
-│   ├── register.html      # Secure user registration interface
-│   ├── login.html         # Authentication page
-│   └── dashboard.html     # Dashboard with audit trail
+│   ├── register.html
+│   ├── login.html
+│   └── dashboard.html
 │
 └── static/
-    └── style.css          # UI styling
+    └── style.css
 
-🚀 Installation & Execution Steps
-Step 1: Prerequisites
-
-Python 3.7 or above
-
-Basic knowledge of Flask
-
-Step 2: Install Dependencies
+🚀 Installation & Setup
+1️⃣ Install Dependencies
 pip install -r requirements.txt
 
-Step 3: Run the Application
+2️⃣ Run the Application
 python app.py
 
-Step 4: Access via Browser
+3️⃣ Open in Browser
 http://127.0.0.1:5000
 
-🔐 Core Security Concepts Implemented
-1️⃣ Password Hashing
+🔐 Security Features
+✔ Password Hashing
 
-Passwords are converted into irreversible cryptographic hashes
+Uses bcrypt, a strong adaptive hashing algorithm
 
-bcrypt uses adaptive hashing, making brute-force attacks computationally expensive
+Hashing is one-way and irreversible
 
-Even database administrators cannot view actual passwords
+✔ Automatic Salting
 
-2️⃣ Automatic Salting
+bcrypt automatically generates a unique salt for each password
 
-A unique random salt is generated for every password
+Prevents rainbow table attacks
 
-Prevents:
+✔ Secure Authentication
 
-Rainbow table attacks
+Password verification without exposing original credentials
 
-Hash collision attacks
+Safe comparison of hashed values
 
-bcrypt internally manages salt storage securely
+✔ Audit Logging
 
-3️⃣ Secure Password Verification
+Logs all login attempts (success & failure)
 
-User-entered password is hashed using the same salt
+Records username, status, and timestamp
 
-Hashes are compared without exposing original passwords
+Supports security audit and compliance requirements
 
-Ensures secure authentication flow
-
-4️⃣ Audit Logging (Compliance Feature)
-
-Every login attempt is logged with:
-
-Username
-
-Login status (Success / Failure)
-
-Timestamp
-
-Essential for:
-
-Security audits
-
-Intrusion detection
-
-Compliance verification
-
-🗄️ Database Design (Normalized & Secure)
-🔹 Users Table
+🗄️ Database Schema
+Users Table
 Field	Description
-id	Unique user identifier
-username	Unique login name
+id	Primary Key
+username	Unique username
 password_hash	bcrypt hashed password
-created_at	Account creation timestamp
-🔹 Audit Logs Table
+created_at	Account creation time
+Audit Logs Table
 Field	Description
-id	Unique log identifier
+id	Primary Key
 username	Login attempt user
 status	success / failure
 timestamp	Login attempt time
-🧠 Key Functional Modules
-🔹 hash_password(password)
+🧪 Testing Scenarios
 
-Generates salt + hash using bcrypt
+Weak password rejection
 
-Returns secure hash
+Duplicate username prevention
 
-🔹 verify_password(password, stored_hash)
+Failed login detection
 
-Verifies password without revealing hash
+Successful authentication
 
-Returns authentication result
+Audit log verification
 
-🔹 log_audit_event(username, status)
+⚠️ Limitations
 
-Records authentication activity
+HTTPS not implemented (development only)
 
-Supports security compliance
+No account lockout mechanism
 
-🔹 validate_password(password)
+Rate limiting not applied
 
-Enforces password policy (minimum length)
+Not production-ready
 
-Prevents weak credentials
+🔮 Future Enhancements
 
-🧪 Testing & Validation
+HTTPS & SSL encryption
 
-✔ Weak password rejection
-✔ Duplicate username prevention
-✔ Successful & failed login detection
-✔ Audit trail verification
-✔ Secure password comparison
+Account lockout after failed attempts
+
+Password complexity rules
+
+Role-based access control
+
+Cloud deployment
+
+🎓 Academic Relevance
+
+This project is suitable for:
+
+Security Audit & Compliance
+
+Information Security
+
+Cyber Security Fundamentals
+
+Secure Software Development
+
+📌 Conclusion
+
+This project demonstrates a secure, audit-compliant authentication system using modern cryptographic techniques.
+It effectively bridges theoretical security concepts with practical implementation, making it ideal for academic evaluation and viva examinations.
+
+📚 References
+
+Flask Documentation
+
+bcrypt Documentation
+
+OWASP Password Storage Cheat Sheet
+
